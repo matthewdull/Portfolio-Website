@@ -1,27 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
     const themeToggle = document.getElementById("theme-toggle");
     const body = document.body;
+    const savedTheme = localStorage.getItem("theme");
+    const glow = document.querySelector(".mouse-glow");
 
-    // Check for saved theme preference
-    if (localStorage.getItem("theme") === "dark-mode") {
-        body.classList.remove("light-mode");
-        body.classList.add("dark-mode");
-    } else {
-        body.classList.remove("dark-mode");
-        body.classList.add("light-mode");
+    // Apply saved theme preference
+    body.classList.toggle("dark-mode", savedTheme === "dark-mode");
+    body.classList.toggle("light-mode", savedTheme !== "dark-mode");
+
+    function updateButtonText() {
+        themeToggle.textContent = body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
     }
+    updateButtonText();
 
-    // Toggle theme on button click
     themeToggle.addEventListener("click", function () {
-        console.log("Toggling theme..."); // Debugging log
-        if (body.classList.contains("light-mode")) {
-            body.classList.remove("light-mode");
-            body.classList.add("dark-mode");
-            localStorage.setItem("theme", "dark-mode");
-        } else {
-            body.classList.remove("dark-mode");
-            body.classList.add("light-mode");
-            localStorage.setItem("theme", "light-mode");
-        }
+        body.classList.toggle("light-mode");
+        body.classList.toggle("dark-mode");
+        localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark-mode" : "light-mode");
+        updateButtonText();
+    });
+
+    // Mouse move effect
+    document.addEventListener("mousemove", function (e) {
+        const glow = document.querySelector(".mouse-glow"); // Assuming you're selecting the glow element
+
+        // Adjust the mouse Y position for page scrolling
+        const mouseX = e.clientX - 125;
+        const mouseY = e.clientY - 325 + window.scrollY; // Add scrollY to adjust for page scrolling
+
+        // Move the glow element
+        glow.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
     });
 });

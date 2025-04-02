@@ -182,3 +182,23 @@ h2 {
     text-decoration: underline;
     color: #8daeeb;
 }
+
+/* Mouse Glow Effect */
+.mouse-glow {
+    position: absolute;
+    width: 250px;  /* Size of the glow */
+    height: 250px;
+    border-radius: 50%;
+    pointer-events: none;  /* Prevents interference with clicking */
+    filter: blur(50px);
+}
+
+/* Light Mode Glow (Light Blue) */
+.light-mode .mouse-glow {
+    background-color: #9bb4e7; /* Light Blue */
+}
+
+/* Dark Mode Glow (Light White) */
+.dark-mode .mouse-glow {
+    background-color: rgba(255, 255, 255, 0.3); /* Soft White */
+}
